@@ -1009,7 +1009,7 @@
       <p class="hero-role">
         <span id="typed-text"></span><span class="cursor"></span>
       </p>
-      <p class="hero-year">2026</p>
+      <p class="hero-year" id="year-counter">2023</p>
       <div class="social-links">
         <a class="social-btn" href="https://linkedin.com" target="_blank">
           <svg width="26" height="26" fill="currentColor" viewBox="0 0 16 16">
@@ -1548,6 +1548,24 @@
     }
 
     setTimeout(typeEffect, 1000);
+
+    // Year Counter Animation
+    const yearCounter = document.getElementById('year-counter');
+    if (yearCounter) {
+      let currentYear = 2023;
+      const endYear = 2026;
+      const duration = 1500; // 1.5 seconds animation
+      const interval = duration / (endYear - currentYear + 1);
+
+      const counterInterval = setInterval(() => {
+        currentYear++;
+        yearCounter.textContent = currentYear;
+
+        if (currentYear >= endYear) {
+          clearInterval(counterInterval);
+        }
+      }, interval);
+    }
   </script>
 </body>
 
