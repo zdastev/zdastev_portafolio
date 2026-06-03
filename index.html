@@ -1424,6 +1424,12 @@
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.8.0/vanilla-tilt.min.js"></script>
   <script>
+    // Force scroll to top on page load
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo(0, 0);
+
     const langBtns = document.querySelectorAll('.lang-btn');
     const translatableElements = document.querySelectorAll('[data-en]');
     let currentLanguage = 'es';
