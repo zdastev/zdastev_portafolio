@@ -1549,22 +1549,49 @@
 
     setTimeout(typeEffect, 1000);
 
-    // Year Counter Animation
+    // Year Counter Animation (Smooth Rolling Effect)
     const yearCounter = document.getElementById('year-counter');
     if (yearCounter) {
+      yearCounter.style.display = 'inline-block';
+      yearCounter.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+      
       let currentYear = 2023;
       const endYear = 2026;
-      const duration = 1500; // 1.5 seconds animation
-      const interval = duration / (endYear - currentYear + 1);
 
-      const counterInterval = setInterval(() => {
-        currentYear++;
-        yearCounter.textContent = currentYear;
+      function nextYear() {
+        if (currentYear >= endYear) return;
+        
+        // Animate out (Slide up & fade)
+        yearCounter.style.transform = 'translateY(-15px)';
+        yearCounter.style.opacity = '0';
+        yearCounter.style.filter = 'blur(4px)';
+        
+        setTimeout(() => {
+          currentYear++;
+          yearCounter.textContent = currentYear;
+          
+          // Reset position to bottom instantly
+          yearCounter.style.transition = 'none';
+          yearCounter.style.transform = 'translateY(15px)';
+          
+          // Force reflow
+          void yearCounter.offsetWidth;
+          
+          // Animate in (Slide to center & appear)
+          yearCounter.style.transition = 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)';
+          yearCounter.style.transform = 'translateY(0)';
+          yearCounter.style.opacity = '1';
+          yearCounter.style.filter = 'blur(0)';
+          
+          // Call next iteration
+          if (currentYear < endYear) {
+            setTimeout(nextYear, 800);
+          }
+        }, 400); // Wait for animate out
+      }
 
-        if (currentYear >= endYear) {
-          clearInterval(counterInterval);
-        }
-      }, interval);
+      // Start animation after a short delay
+      setTimeout(nextYear, 800);
     }
   </script>
 </body>
